@@ -1,12 +1,13 @@
 from openai_api import openai_api
 import json
-from DiaAct import (MachineU, UserU, CondGenerator)
-
+from DiaAct import (MachineU, UserU, 
+                    CondGenerator, WorldBuilder)
 
 
 llm = openai_api("gpt-4o-mini",0)
-user_U = UserU(llm)
-machine_U = MachineU(llm)
+world = WorldBuilder("KG")
+user_U = UserU(llm, world)
+machine_U = MachineU(llm, world)
 cond_generator = CondGenerator(llm)
 
 with open('./dataset/false_recommendation&false_label/dataset_json/base_orig.json', 'r', encoding='utf-8') as f_in:

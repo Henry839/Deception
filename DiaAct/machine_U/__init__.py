@@ -2,6 +2,7 @@
 
 This module is used to generate machine belief based on the context of the conversation.
 """
+
 class MachineU():
     """Generate Machine Belief.
 
@@ -10,36 +11,25 @@ class MachineU():
 
     Attributes:
         model: The language model used to generate machine belief
+        world: The world model
+        machine_belief: The machine belief. 
+                        `dict` if world.build_type == "KG"
 
     """
-    def __init__(self, model):
+    def __init__(self, 
+                 model,
+                 world):
         """Initialization
 
         Args:
             model: LLM or language model
+            world: the world model, containing the full set W
+
         """
         self.model = model 
+        self.world = world
+        self.machine_belief = None
 
-    def prompt_generate(self, context):
-        """Prompt-based method
 
-        Args:
-            context: context of the conversation
-
-        Returns:
-            response: machine belief
-        """
-        prompt_template = ('Please analyze the belief state of the specific' 
-                           'character in the following text briefly: {}\n' 
-                           'Based on the context above, what does \'you\' know beforehand?'
-                           'Please start your brief analysis with "You know ..."')
-        messages = [
-            {"role": "system", "content": "You are a helpful assistant."},
-            {
-                "role": "user",
-                "content": prompt_template.format(context)
-            }
-        ]
-        response = self.model.chat(messages)
-        return response
+    from .generate import prompt_generate
 

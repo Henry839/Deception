@@ -35,16 +35,16 @@ class CondGenerator():
         """
 
         prompt_template = ('1. Question background: {}\n'
-                           '2. The burglar\'s belief state: {}\n'
+                           '2. Your opponent\'s belief state: {}\n'
                            '3. Your belief state: {}\n'
                            'Please consider the Question background, '
-                           'the burglar\'s belief state, and your belief state' 
-                           'to provide your final choice to prevent the burglar\'s theft.').format(context, user_U, machine_U)
+                           'the opponent\'s belief state, and your belief state' 
+                           'to provide your final choice to prevent the opponent\'s theft.').format(context, user_U, machine_U)
         messages = [
             {"role": "system", "content": "You are a helpful assistant."},
             {
                 "role": "user",
-                "content": prompt_template.format(context)
+                "content": prompt_template
             }
         ]
         response = self.model.chat(messages)
